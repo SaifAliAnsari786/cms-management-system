@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Page extends Model
 {
@@ -38,5 +40,10 @@ class Page extends Model
     public function menu()
     {
         return $this->hasOne(Menu::class, 'page_id');
+    }
+
+    public function menus(): HasMany
+    {
+        return $this->hasMany(Menu::class);
     }
 }

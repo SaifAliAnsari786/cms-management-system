@@ -16,14 +16,19 @@ class PageController extends Controller
     /**
      * Display a listing of pages.
      */
-    public function index(Request $request)
+   public function index(Request $request)
     {
         $pages = Page::query()
-            ->when($request->search, function ($query, $search) {
-                $query->where('title', 'like', "%{$search}%");
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
             })
-            ->when($request->status, function ($query, $status) {
-                $query->where('status', $status);
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when($request->filled('menu_id'), function ($query) use ($request) {
+                $query->whereHas('menus', function ($q) use ($request) {
+                    $q->where('id', $request->menu_id);
+                });
             })
             ->latest()
             ->paginate(10);
@@ -37,6 +42,12 @@ class PageController extends Controller
     public function store(StorePageRequest $request)
     {
         $data = $request->validated();
+
+        if (!empty($data['published_at'])) {
+            $data['status'] = now()->lt($data['published_at'])
+                ? 'draft'
+                : 'published';
+        }
 
         if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $request->file('cover_image')
@@ -72,6 +83,12 @@ class PageController extends Controller
     {
         $data = $request->validated();
 
+        if (!empty($data['published_at'])) {
+            $data['status'] = now()->lt($data['published_at'])
+                ? 'draft'
+                : 'published';
+        }
+        
         if ($request->hasFile('cover_image')) {
 
             if ($page->cover_image && Storage::disk('public')->exists($page->cover_image)) {
