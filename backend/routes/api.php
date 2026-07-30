@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::middleware('permission:page-list')->group(function () {
             Route::get('/', [PageController::class, 'index']);
+            Route::get('/trash', [PageController::class, 'trash']);
             Route::get('/{page}', [PageController::class, 'show']);
         });
 
@@ -58,5 +59,6 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
     });
+
 
 });

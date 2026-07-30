@@ -105,4 +105,33 @@ class PageController extends Controller
             'message' => 'Page deleted successfully.',
         ]);
     }
+
+    /**
+     * Display all soft deleted pages.
+     */
+    public function trash()
+    {
+        $pages = Page::onlyTrashed()
+            ->latest()
+            ->paginate(10);
+
+        return PageResource::collection($pages);
+    }
+
+    /**
+     * Restore a soft deleted page.
+     */
+    public function restore($id)
+    {
+        $page = Page::onlyTrashed()->findOrFail($id);
+
+        $page->restore();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Page restored successfully.',
+            'data' => new PageResource($page),
+        ]);
+    }   
+
 }
