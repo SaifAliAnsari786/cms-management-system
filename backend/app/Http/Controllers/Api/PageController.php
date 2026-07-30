@@ -7,121 +7,102 @@ use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Http\Resources\PageResource;
 use App\Models\Page;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
     /**
      * Display a listing of pages.
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        $query = Page::query();
+        $pages = Page::query()
+            ->when($request->search, function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->latest()
+            ->paginate(10);
 
-        if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        $pages = $query->latest()->paginate(10);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Pages fetched successfully.',
-            'data' => PageResource::collection($pages->items()),
-            'pagination' => [
-                'current_page' => $pages->currentPage(),
-                'last_page'    => $pages->lastPage(),
-                'per_page'     => $pages->perPage(),
-                'total'        => $pages->total(),
-                'from'         => $pages->firstItem(),
-                'to'           => $pages->lastItem(),
-            ],
-        ], 200);
+        return PageResource::collection($pages);
     }
 
     /**
      * Store a newly created page.
      */
-    public function store(StorePageRequest $request): JsonResponse
+    public function store(StorePageRequest $request)
     {
-        $slug = Str::slug($request->title);
+        $data = $request->validated();
 
-        while (Page::where('slug', $slug)->exists()) {
-            $slug = Str::slug($request->title) . '-' . Str::lower(Str::random(5));
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')
+                ->store('pages', 'public');
         }
 
-        $page = Page::create([
-            'title'      => $request->title,
-            'slug'       => $slug,
-            'content'    => $request->content,
-            'status'     => $request->status,
-            'created_by' => auth()->id(),
-        ]);
+        $data['created_by'] = Auth::id();
+
+        $page = Page::create($data);
 
         return response()->json([
             'success' => true,
             'message' => 'Page created successfully.',
-            'data'    => new PageResource($page),
+            'data' => new PageResource($page),
         ], 201);
     }
 
     /**
      * Display the specified page.
      */
-    public function show(Page $page): JsonResponse
+    public function show(Page $page)
     {
         return response()->json([
             'success' => true,
-            'message' => 'Page fetched successfully.',
-            'data'    => new PageResource($page),
-        ], 200);
+            'data' => new PageResource($page),
+        ]);
     }
 
     /**
      * Update the specified page.
      */
-    public function update(UpdatePageRequest $request, Page $page): JsonResponse
+    public function update(UpdatePageRequest $request, Page $page)
     {
-        $slug = Str::slug($request->title);
+        $data = $request->validated();
 
-        while (
-            Page::where('slug', $slug)
-                ->where('id', '!=', $page->id)
-                ->exists()
-        ) {
-            $slug = Str::slug($request->title) . '-' . Str::lower(Str::random(5));
+        if ($request->hasFile('cover_image')) {
+
+            if ($page->cover_image && Storage::disk('public')->exists($page->cover_image)) {
+                Storage::disk('public')->delete($page->cover_image);
+            }
+
+            $data['cover_image'] = $request->file('cover_image')
+                ->store('pages', 'public');
         }
 
-        $page->update([
-            'title'   => $request->title,
-            'slug'    => $slug,
-            'content' => $request->content,
-            'status'  => $request->status,
-        ]);
+        $data['updated_by'] = Auth::id();
+
+        $page->update($data);
 
         return response()->json([
             'success' => true,
             'message' => 'Page updated successfully.',
-            'data'    => new PageResource($page->fresh()),
-        ], 200);
+            'data' => new PageResource($page->fresh()),
+        ]);
     }
 
     /**
      * Remove the specified page.
      */
-    public function destroy(Page $page): JsonResponse
+    public function destroy(Page $page)
     {
         $page->delete();
 
         return response()->json([
             'success' => true,
             'message' => 'Page deleted successfully.',
-        ], 200);
+        ]);
     }
 }

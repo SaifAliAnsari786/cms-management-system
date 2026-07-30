@@ -3,35 +3,72 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            'dashboard.view',
+            // Pages
+            'page-list',
+            'page-create',
+            'page-edit',
+            'page-delete',
 
-            'users.view',
-            'users.create',
-            'users.update',
-            'users.delete',
+            // Menus
+            'menu-list',
+            'menu-create',
+            'menu-edit',
+            'menu-delete',
 
-            'pages.view',
-            'pages.create',
-            'pages.update',
-            'pages.delete',
+            // Users
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
+
+            // Roles
+            'role-list',
+            'role-create',
+            'role-edit',
+            'role-delete',
+
+            // Permissions
+            'permission-list',
+            'permission-create',
+            'permission-edit',
+            'permission-delete',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
         }
 
-        $admin = Role::firstOrCreate(['name' => 'Admin']);
+        $admin = Role::firstOrCreate([
+            'name' => 'Admin',
+            'guard_name' => 'web',
+        ]);
+
+        $moderator = Role::firstOrCreate([
+            'name' => 'Moderator',
+            'guard_name' => 'web',
+        ]);
 
         $admin->syncPermissions(Permission::all());
+
+        $moderator->syncPermissions([
+            'page-list',
+            'page-create',
+            'page-edit',
+            'menu-list',
+        ]);
     }
 }
