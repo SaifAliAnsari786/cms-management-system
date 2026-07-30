@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::middleware('permission:page-edit')->group(function () {
             Route::put('/{page}', [PageController::class, 'update']);
+            Route::post('/{page}/restore', [PageController::class, 'restore']);
         });
 
         Route::middleware('permission:page-delete')->group(function () {
