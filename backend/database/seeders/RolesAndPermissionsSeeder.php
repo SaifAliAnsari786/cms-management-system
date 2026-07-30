@@ -82,5 +82,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'page-edit',
             'menu-list',
         ]);
+
+        $admin->givePermissionTo([
+            'role-list',
+            'role-create',
+            'role-edit',
+            'role-delete',
+        ]);
     }
 }

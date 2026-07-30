@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,5 +86,50 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
+    // Role Routes
+
+    Route::prefix('roles')->group(function () {
+
+        Route::middleware('permission:role-list')->group(function () {
+            Route::get('/', [RoleController::class, 'index']);
+            Route::get('/{role}', [RoleController::class, 'show']);
+        });
+
+        Route::middleware('permission:role-create')->group(function () {
+            Route::post('/', [RoleController::class, 'store']);
+        });
+
+        Route::middleware('permission:role-edit')->group(function () {
+            Route::put('/{role}', [RoleController::class, 'update']);
+        });
+
+        Route::middleware('permission:role-delete')->group(function () {
+            Route::delete('/{role}', [RoleController::class, 'destroy']);
+        });
+
+    });
+
+    // Permission Routes
+
+    Route::prefix('permissions')->group(function () {
+
+        Route::middleware('permission:permission-list')->group(function () {
+            Route::get('/', [PermissionController::class, 'index']);
+            Route::get('/{permission}', [PermissionController::class, 'show']);
+        });
+
+        Route::middleware('permission:permission-create')->group(function () {
+            Route::post('/', [PermissionController::class, 'store']);
+        });
+
+        Route::middleware('permission:permission-edit')->group(function () {
+            Route::put('/{permission}', [PermissionController::class, 'update']);
+        });
+
+        Route::middleware('permission:permission-delete')->group(function () {
+            Route::delete('/{permission}', [PermissionController::class, 'destroy']);
+        });
+
+    });
 
 });
