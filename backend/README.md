@@ -1,59 +1,383 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CMS Management System API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A production-ready Content Management System (CMS) backend developed with **Laravel 12**. This project provides secure REST APIs with authentication, role-based access control (RBAC), dynamic page management, menu management, Swagger/OpenAPI documentation, and automated feature tests.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Repository
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**GitHub Repository**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+https://github.com/SaifAliAnsari786/cms-management-system
 
-## Learning Laravel
+Clone the repository:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+git clone https://github.com/SaifAliAnsari786/cms-management-system.git
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Navigate to the backend project:
 
-## Laravel Sponsors
+```bash
+cd cms-management-system/backend
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+# Technology Stack
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Laravel 12
+- PHP 8.2+
+- Laravel Sanctum
+- Spatie Laravel Permission
+- MySQL / PostgreSQL / SQLite
+- Swagger / OpenAPI (L5 Swagger)
+- PHPUnit
+- ReactJS (Frontend - Assignment Requirement)
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Features
 
-## Code of Conduct
+## Authentication
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Laravel Sanctum Authentication
+- User Login
+- User Logout
+- Protected API Routes
 
-## Security Vulnerabilities
+## User Management
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Create User
+- Update User
+- Delete User
+- List Users
+- Assign Roles
 
-## License
+## Role Management
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Create Roles
+- Update Roles
+- Delete Roles
+- Assign Permissions
+
+## Permission Management
+
+- Create Permissions
+- Update Permissions
+- Delete Permissions
+- Role-Based Access Control (RBAC)
+
+## Page Management
+
+- Create Pages
+- Update Pages
+- Delete Pages
+- Restore Deleted Pages
+- Soft Delete Support
+- CKEditor Content
+- Cover Image Upload
+- Draft & Published Status
+- Scheduled Publishing
+- Audit Fields (Created By & Updated By)
+
+## Dynamic Menu
+
+- Create Menu
+- Update Menu
+- Delete Menu
+- Nested Menu Structure
+- Sortable Menu Items
+- Associate Pages with Menu Items
+
+## REST API Features
+
+- Form Request Validation
+- API Resources
+- Authentication
+- Authorization
+- Pagination
+- Search
+- Filtering
+- Standard JSON Responses
+
+## API Documentation
+
+- Swagger / OpenAPI Documentation
+- Interactive Swagger UI
+
+## Automated Testing
+
+- Authentication Tests
+- Authorization Tests
+- Restore Endpoint Tests
+- Swagger Configuration Tests
+
+---
+
+# Project Structure
+
+```
+backend/
+├── app/
+│   ├── Console/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   ├── Middleware/
+│   │   ├── Requests/
+│   │   └── Resources/
+│   ├── Models/
+│   ├── OpenApi/
+│   ├── Providers/
+│   └── helpers.php
+│
+├── bootstrap/
+├── config/
+├── database/
+│   ├── factories/
+│   ├── migrations/
+│   └── seeders/
+│
+├── public/
+├── resources/
+├── routes/
+├── storage/
+├── tests/
+├── composer.json
+└── README.md
+```
+
+---
+
+# System Requirements
+
+- PHP 8.2 or higher
+- Composer
+- MySQL / PostgreSQL / SQLite
+- Git
+
+---
+
+# Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/SaifAliAnsari786/cms-management-system.git
+```
+
+## 2. Move to Backend Directory
+
+```bash
+cd cms-management-system/backend
+```
+
+## 3. Install Dependencies
+
+```bash
+composer install
+```
+
+## 4. Create Environment File
+
+```bash
+cp .env.example .env
+```
+
+## 5. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+## 6. Configure Database
+
+Update the following values in your `.env` file.
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+## 7. Run Database Migrations & Seeders
+
+```bash
+php artisan migrate --seed
+```
+
+## 8. Create Storage Link
+
+```bash
+php artisan storage:link
+```
+
+## 9. Start the Development Server
+
+```bash
+php artisan serve
+```
+
+Laravel will display the application URL in the terminal.
+
+Example:
+
+```
+INFO  Server running on [http://127.0.0.1:8000]
+```
+
+If port **8000** is unavailable, Laravel will automatically use another available port.
+
+---
+
+# Default Login Credentials
+
+## Administrator
+
+| Email | Password |
+|--------|----------|
+| admin@example.com | password |
+
+> Update these credentials if your database seeders use different values.
+
+---
+
+# Swagger Documentation
+
+Generate the API documentation.
+
+```bash
+php artisan l5-swagger:generate
+```
+
+Open Swagger UI in your browser.
+
+```
+<APP_URL>/api/documentation
+```
+
+Example:
+
+```
+http://127.0.0.1:8000/api/documentation
+```
+
+---
+
+# Running Automated Tests
+
+Run all tests.
+
+```bash
+php artisan test
+```
+
+Run a specific test.
+
+```bash
+php artisan test --filter=PageRestoreTest
+```
+
+Run Swagger configuration test.
+
+```bash
+php artisan test --filter=SwaggerConfigTest
+```
+
+---
+
+# Scheduled Publishing
+
+Run the Laravel scheduler.
+
+```bash
+php artisan schedule:work
+```
+
+or
+
+```bash
+php artisan schedule:run
+```
+
+Pages scheduled for future publication will automatically become publicly available once their publish date has passed.
+
+---
+
+# Custom Helper
+
+A reusable helper has been implemented for common application functionality.
+
+Location:
+
+```
+app/helpers.php
+```
+
+---
+
+# Main Packages
+
+| Package | Purpose |
+|----------|---------|
+| Laravel Sanctum | API Authentication |
+| Spatie Laravel Permission | Roles & Permissions |
+| L5 Swagger | Swagger / OpenAPI Documentation |
+| PHPUnit | Automated Testing |
+
+---
+
+# Assignment Requirements Covered
+
+- Laravel Sanctum Authentication
+- Users CRUD API
+- Roles CRUD API
+- Permissions CRUD API
+- Pages CRUD API
+- Dynamic Menu Management
+- CKEditor Integration
+- Cover Image Upload
+- Form Request Validation
+- API Resources
+- Search
+- Pagination
+- Filtering
+- Audit Fields
+- Soft Delete
+- Restore Deleted Pages
+- Scheduled Publishing
+- Custom Helper
+- Swagger / OpenAPI Documentation
+- Automated Feature Tests
+
+---
+
+# REST API
+
+The CMS backend provides RESTful APIs for the following resources:
+
+- Authentication
+- User Management
+- Role Management
+- Permission Management
+- Page Management
+- Menu Management
+
+All endpoints are documented using Swagger/OpenAPI and can be accessed through the integrated Swagger documentation after running the application.
+
+---
+
+# License
+
+This project was developed as part of a Laravel Developer Technical Assignment.
+
+---
+
+# Author
+
+**Saif Ali Ansari**
+
+GitHub: https://github.com/SaifAliAnsari786
