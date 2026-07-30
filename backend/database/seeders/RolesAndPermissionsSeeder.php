@@ -62,9 +62,21 @@ class RolesAndPermissionsSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
+        $editor = Role::firstOrCreate([
+            'name' => 'Editor',
+            'guard_name' => 'web',
+        ]);
+
         $admin->syncPermissions(Permission::all());
 
         $moderator->syncPermissions([
+            'page-list',
+            'page-create',
+            'page-edit',
+            'menu-list',
+        ]);
+
+        $editor->syncPermissions([
             'page-list',
             'page-create',
             'page-edit',
