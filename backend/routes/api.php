@@ -8,15 +8,34 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Authentication Routes
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::post('/login', [AuthController::class, 'login']);
+
+// Public CMS APIs
+Route::get('/pages', [PageController::class, 'index']);
+Route::get('/pages/{page}', [PageController::class, 'show']);
+Route::get('/menus', [MenuController::class, 'index']);
+
+/*
+|--------------------------------------------------------------------------
+| Protected Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // User Routes
+    /*
+    |--------------------------------------------------------------------------
+    | Users
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('users')->group(function () {
 
@@ -39,14 +58,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    // Page Routes
+    /*
+    |--------------------------------------------------------------------------
+    | Pages
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('pages')->group(function () {
 
         Route::middleware('permission:page-list')->group(function () {
-            Route::get('/', [PageController::class, 'index']);
             Route::get('/trash', [PageController::class, 'trash']);
-            Route::get('/{page}', [PageController::class, 'show']);
         });
 
         Route::middleware('permission:page-create')->group(function () {
@@ -64,12 +85,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    // Menu Routes
+    /*
+    |--------------------------------------------------------------------------
+    | Menus
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('menus')->group(function () {
 
         Route::middleware('permission:menu-list')->group(function () {
-            Route::get('/', [MenuController::class, 'index']);
             Route::get('/{menu}', [MenuController::class, 'show']);
         });
 
@@ -87,7 +111,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    // Role Routes
+    /*
+    |--------------------------------------------------------------------------
+    | Roles
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('roles')->group(function () {
 
@@ -110,7 +138,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    // Permission Routes
+    /*
+    |--------------------------------------------------------------------------
+    | Permissions
+    |--------------------------------------------------------------------------
+    */
 
     Route::prefix('permissions')->group(function () {
 
